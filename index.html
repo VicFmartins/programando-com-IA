@@ -1,0 +1,1017 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Programando com IA</title>
+<meta
+  name="description"
+  content="Manual visual sobre como usar IA como ferramenta para planejar, construir e publicar projetos com mais clareza."
+>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #ffffff;
+    --bg2: #f8fafc;
+    --bg3: #eef2ff;
+    --txt: #0f172a;
+    --txt2: #475569;
+    --brd: #dbe2ea;
+    --brd2: #b8c4d2;
+    --shadow: 0 24px 60px rgba(15, 23, 42, 0.12);
+    --border-radius-lg: 24px;
+    --border-radius-md: 18px;
+
+    --c0: #1a1a2e;
+    --blue: #2563EB;
+    --blue-l: #DBEAFE;
+    --blue-d: #1E40AF;
+    --green: #16A34A;
+    --green-l: #DCFCE7;
+    --green-d: #14532D;
+    --amber: #D97706;
+    --amber-l: #FEF3C7;
+    --amber-d: #78350F;
+    --red: #DC2626;
+    --red-l: #FEE2E2;
+    --red-d: #7F1D1D;
+    --purple: #7C3AED;
+    --purple-l: #EDE9FE;
+    --purple-d: #3B0764;
+    --teal: #0F766E;
+    --teal-l: #CCFBF1;
+    --teal-d: #042f2e;
+    --pink: #DB2777;
+    --pink-l: #FCE7F3;
+    --pink-d: #500724;
+  }
+
+  html {
+    background:
+      radial-gradient(circle at top, rgba(37, 99, 235, 0.14), transparent 32%),
+      linear-gradient(180deg, #eff6ff 0%, #f8fafc 28%, #fff7ed 100%);
+  }
+
+  body {
+    font-family: 'Syne', sans-serif;
+    background: transparent;
+    color: var(--txt);
+    min-height: 100vh;
+    padding: 32px 16px 48px;
+  }
+
+  .wrapper {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 1.5rem 1rem 3rem;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    border-radius: 32px;
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(18px);
+  }
+
+  .header { text-align: center; margin-bottom: 2.5rem; }
+  .header-badge {
+    display: inline-block;
+    background: var(--blue-l);
+    color: var(--blue-d);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 999px;
+    margin-bottom: 12px;
+    font-family: 'Space Mono', monospace;
+  }
+  .header h1 {
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1.2;
+    color: var(--txt);
+    margin-bottom: 8px;
+  }
+  .header p {
+    font-size: 14px;
+    color: var(--txt2);
+    max-width: 480px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--txt2);
+    font-family: 'Space Mono', monospace;
+  }
+  .legend-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .nav-tabs {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    margin-bottom: 1.5rem;
+    scrollbar-width: none;
+  }
+  .nav-tabs::-webkit-scrollbar { display: none; }
+
+  .tab-btn {
+    flex-shrink: 0;
+    padding: 6px 14px;
+    border-radius: 999px;
+    border: 1.5px solid var(--brd);
+    background: var(--bg);
+    color: var(--txt2);
+    font-size: 12px;
+    font-weight: 600;
+    font-family: 'Syne', sans-serif;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .tab-btn .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .tab-btn:hover { border-color: var(--brd2); background: var(--bg2); }
+  .tab-btn.active {
+    color: var(--txt);
+    border-color: currentColor;
+    background: var(--bg);
+    font-weight: 700;
+  }
+
+  .section { display: none; }
+  .section.active { display: block; }
+
+  .step-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 1.2rem;
+    padding: 1.25rem;
+    border-radius: var(--border-radius-lg);
+    border: 0.5px solid var(--brd);
+    background: var(--bg2);
+  }
+  .step-num {
+    flex-shrink: 0;
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    font-weight: 800;
+    font-family: 'Space Mono', monospace;
+  }
+  .step-title { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+  .step-sub { font-size: 13px; color: var(--txt2); line-height: 1.5; }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+    margin-bottom: 1.2rem;
+  }
+
+  .card {
+    background: var(--bg);
+    border: 0.5px solid var(--brd);
+    border-radius: var(--border-radius-lg);
+    padding: 1rem;
+  }
+  .card-icon {
+    font-size: 20px;
+    margin-bottom: 8px;
+  }
+  .card-title {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    color: var(--txt);
+  }
+  .card-body {
+    font-size: 12px;
+    color: var(--txt2);
+    line-height: 1.6;
+  }
+
+  .accent-card {
+    border-radius: var(--border-radius-lg);
+    padding: 1.1rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 0.5px solid var(--brd);
+  }
+  .accent-card .ac-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-family: 'Space Mono', monospace;
+    margin-bottom: 6px;
+  }
+  .accent-card .ac-body {
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--txt);
+  }
+  .accent-card .ac-body strong { font-weight: 700; }
+
+  .tip-box {
+    display: flex;
+    gap: 12px;
+    padding: 1rem 1.1rem;
+    border-radius: var(--border-radius-md);
+    border: 0.5px solid var(--brd);
+    margin-bottom: 10px;
+    background: var(--bg2);
+  }
+  .tip-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .tip-text { font-size: 13px; line-height: 1.6; color: var(--txt); }
+  .tip-text strong { font-weight: 700; }
+
+  .divider {
+    height: 0.5px;
+    background: var(--brd);
+    margin: 1.2rem 0;
+  }
+
+  .tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .tag {
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    font-family: 'Space Mono', monospace;
+  }
+
+  .mindmap-svg { width: 100%; margin-bottom: 1.2rem; }
+
+  .phase-bar {
+    display: flex;
+    gap: 0;
+    border-radius: var(--border-radius-md);
+    overflow: hidden;
+    margin-bottom: 1rem;
+    height: 36px;
+    border: 0.5px solid var(--brd);
+  }
+  .phase-seg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 0.5px;
+    flex: 1;
+  }
+
+  .checklist { list-style: none; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 0.5px solid var(--brd);
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--txt);
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .check-bullet {
+    flex-shrink: 0;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    border: 1.5px solid var(--brd2);
+    margin-top: 1px;
+  }
+
+  .quote-block {
+    border-left: 3px solid;
+    padding: 0.75rem 1rem;
+    margin: 1rem 0;
+    border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+  }
+  .quote-block p { font-size: 14px; font-weight: 600; line-height: 1.5; font-style: italic; }
+  .quote-block span { font-size: 11px; font-family: 'Space Mono', monospace; color: var(--txt2); margin-top: 4px; display: block; }
+
+  .brain-section {
+    background: var(--bg2);
+    border: 0.5px solid var(--brd);
+    border-radius: var(--border-radius-lg);
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  .brain-title {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  @media (max-width: 520px) { .two-col { grid-template-columns: 1fr; } }
+
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 1rem;
+  }
+  @media (max-width: 500px) { .summary-grid { grid-template-columns: repeat(2, 1fr); } }
+  .summary-cell {
+    border-radius: var(--border-radius-md);
+    padding: 0.75rem;
+    text-align: center;
+    border: 0.5px solid var(--brd);
+  }
+  .summary-cell .sc-num {
+    font-size: 22px;
+    font-weight: 800;
+    font-family: 'Space Mono', monospace;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .summary-cell .sc-label {
+    font-size: 11px;
+    color: var(--txt2);
+    font-weight: 600;
+  }
+
+  .flow-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin: 10px 0;
+  }
+  .flow-node {
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: 'Space Mono', monospace;
+  }
+  .flow-arrow { color: var(--txt2); font-size: 14px; }
+
+  .footer-note {
+    margin-top: 2rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--brd);
+    font-size: 12px;
+    line-height: 1.7;
+    color: var(--txt2);
+    text-align: center;
+  }
+
+  @media (max-width: 640px) {
+    body { padding: 18px 10px 28px; }
+    .wrapper { border-radius: 24px; }
+    .header h1 { font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+  <h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden">Manual de como programar usando IA como ferramenta, com etapas, mindmap e boas práticas</h2>
+
+  <div class="header">
+    <div class="header-badge">Manual do Dev com IA</div>
+    <h1>Você é o arquiteto.<br>A IA é o seu estagiário.</h1>
+    <p>Um guia por etapas para criar projetos do zero com inteligência, criatividade e controle.</p>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#2563EB"></div>Banco de Dados</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#16A34A"></div>Backend</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#D97706"></div>Frontend</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#7C3AED"></div>Arquitetura</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#DC2626"></div>Segurança</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#0F766E"></div>Deploy</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#DB2777"></div>IA & Mindset</div>
+  </div>
+
+  <div class="nav-tabs" id="tabs">
+    <button class="tab-btn active" data-tab="t0"><div class="dot" style="background:#DB2777"></div>Mindset</button>
+    <button class="tab-btn" data-tab="t1"><div class="dot" style="background:#7C3AED"></div>Arquitetura</button>
+    <button class="tab-btn" data-tab="t2"><div class="dot" style="background:#2563EB"></div>Banco de Dados</button>
+    <button class="tab-btn" data-tab="t3"><div class="dot" style="background:#16A34A"></div>Backend</button>
+    <button class="tab-btn" data-tab="t4"><div class="dot" style="background:#D97706"></div>Frontend</button>
+    <button class="tab-btn" data-tab="t5"><div class="dot" style="background:#0F766E"></div>Deploy</button>
+    <button class="tab-btn" data-tab="t6"><div class="dot" style="background:#DC2626"></div>Segurança</button>
+    <button class="tab-btn" data-tab="t7"><div class="dot" style="background:#444"></div>Erros & Reset</button>
+  </div>
+
+  <!-- TAB 0: MINDSET -->
+  <div class="section active" id="t0">
+    <div class="step-header">
+      <div class="step-num" style="background:#FCE7F3;color:#DB2777">0</div>
+      <div>
+        <div class="step-title">Mindset — Você cria, a IA executa</div>
+        <div class="step-sub">A IA não tem visão, contexto nem responsabilidade pelo seu projeto. Você sim. Trate a IA como um estagiário talentoso que precisa de direção clara.</div>
+      </div>
+    </div>
+
+    <div class="quote-block" style="border-color:#DB2777;background:#FCE7F3">
+      <p>"A IA não cria sozinha. Nós criamos — a IA é a nossa extensão."</p>
+      <span>— fundamento deste manual</span>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">🧠</div>
+        <div class="card-title">Você é o arquiteto</div>
+        <div class="card-body">Toda decisão de estrutura, tecnologia e fluxo passa pela sua cabeça primeiro. A IA executa o que você direcionou.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🎓</div>
+        <div class="card-title">A IA é o estagiário</div>
+        <div class="card-body">Rápido, útil, cheio de conhecimento — mas sem julgamento próprio. Precisa de instruções claras e revisão constante.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔍</div>
+        <div class="card-title">Conheça seus pontos fracos</div>
+        <div class="card-body">Se você é fraco em segurança, encontre a IA mais apropriada para isso. Não existe IA perfeita, mas existem as mais adequadas pra cada coisa.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔄</div>
+        <div class="card-title">Itere com consciência</div>
+        <div class="card-body">Cada output da IA precisa ser avaliado por você. Nunca cole código sem ler. Nunca aceite uma resposta sem questionar.</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="brain-section">
+      <div class="brain-title"><span aria-hidden="true" style="font-size:18px;color:#DB2777">Idea</span> Como usar a IA a seu favor</div>
+      <div class="tip-box">
+        <div class="tip-icon">📋</div>
+        <div class="tip-text"><strong>Geração de listas completas:</strong> não sabe todos os bancos de dados que existem? Peça pra IA gerar uma lista extensa e depois você avalia o que faz sentido pro seu projeto.</div>
+      </div>
+      <div class="tip-box">
+        <div class="tip-icon">⚖️</div>
+        <div class="tip-text"><strong>Avaliação comparativa:</strong> use a IA pra comparar opções técnicas com base no contexto do seu projeto (latência, custo, escala, tipo de dado).</div>
+      </div>
+      <div class="tip-box">
+        <div class="tip-icon">🔎</div>
+        <div class="tip-text"><strong>Antecipar problemas:</strong> pergunte à IA "quais são os possíveis pontos de falha nessa arquitetura?" antes de sair codando.</div>
+      </div>
+      <div class="tip-box">
+        <div class="tip-icon">🧪</div>
+        <div class="tip-text"><strong>Geração de testes:</strong> a IA é excelente pra criar casos de teste, cenários de erro e edge cases que você talvez não pensaria sozinho.</div>
+      </div>
+    </div>
+
+    <div class="tag-row">
+      <span class="tag" style="background:#FCE7F3;color:#831843">direção</span>
+      <span class="tag" style="background:#FCE7F3;color:#831843">consciência</span>
+      <span class="tag" style="background:#FCE7F3;color:#831843">revisão</span>
+      <span class="tag" style="background:#FCE7F3;color:#831843">autoconhecimento</span>
+    </div>
+  </div>
+
+  <!-- TAB 1: ARQUITETURA -->
+  <div class="section" id="t1">
+    <div class="step-header">
+      <div class="step-num" style="background:#EDE9FE;color:#7C3AED">1</div>
+      <div>
+        <div class="step-title">Arquitetura — O mapa antes da viagem</div>
+        <div class="step-sub">Antes de escrever uma linha de código, desenhe seu projeto. Literalmente. Com cores, setas e formas. Seu cérebro aprende melhor quando vê.</div>
+      </div>
+    </div>
+
+    <div class="accent-card" style="background:#EDE9FE">
+      <div class="ac-label" style="color:#5B21B6">por que desenhar?</div>
+      <div class="ac-body">Quando você era criança, aprendia desenhando. Seu cérebro ainda funciona assim. Um mapa mental colorido ativa conexões que texto puro não ativa. <strong>Pegue papel, caneta colorida e desenhe seu projeto.</strong> Cada cor representa uma camada: azul = banco de dados, verde = backend, amarelo = frontend...</div>
+    </div>
+
+    <svg class="mindmap-svg" viewBox="0 0 680 320" xmlns="http://www.w3.org/2000/svg">
+      <rect width="680" height="320" fill="none"/>
+      <!-- Center -->
+      <rect x="270" y="130" width="140" height="50" rx="25" fill="#EDE9FE" stroke="#7C3AED" stroke-width="1.5"/>
+      <text x="340" y="150" text-anchor="middle" font-family="Syne" font-size="12" font-weight="700" fill="#3B0764">MEU PROJETO</text>
+      <text x="340" y="167" text-anchor="middle" font-family="Syne" font-size="10" fill="#5B21B6">centro do mapa</text>
+
+      <!-- DB -->
+      <line x1="270" y1="155" x2="130" y2="90" stroke="#2563EB" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <rect x="30" y="65" width="100" height="48" rx="10" fill="#DBEAFE" stroke="#2563EB" stroke-width="1"/>
+      <text x="80" y="85" text-anchor="middle" font-family="Syne" font-size="11" font-weight="700" fill="#1E40AF">BANCO</text>
+      <text x="80" y="100" text-anchor="middle" font-family="Syne" font-size="10" fill="#1D4ED8">de dados</text>
+      <text x="80" y="114" text-anchor="middle" font-family="Space Mono" font-size="9" fill="#3B82F6">🔵 azul</text>
+
+      <!-- Backend -->
+      <line x1="270" y1="160" x2="130" y2="200" stroke="#16A34A" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <rect x="30" y="178" width="100" height="48" rx="10" fill="#DCFCE7" stroke="#16A34A" stroke-width="1"/>
+      <text x="80" y="198" text-anchor="middle" font-family="Syne" font-size="11" font-weight="700" fill="#14532D">BACKEND</text>
+      <text x="80" y="213" text-anchor="middle" font-family="Syne" font-size="10" fill="#166534">API / lógica</text>
+      <text x="80" y="227" text-anchor="middle" font-family="Space Mono" font-size="9" fill="#16A34A">🟢 verde</text>
+
+      <!-- Frontend -->
+      <line x1="410" y1="160" x2="550" y2="200" stroke="#D97706" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <rect x="550" y="178" width="100" height="48" rx="10" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/>
+      <text x="600" y="198" text-anchor="middle" font-family="Syne" font-size="11" font-weight="700" fill="#78350F">FRONTEND</text>
+      <text x="600" y="213" text-anchor="middle" font-family="Syne" font-size="10" fill="#92400E">UI / UX</text>
+      <text x="600" y="227" text-anchor="middle" font-family="Space Mono" font-size="9" fill="#D97706">🟡 amarelo</text>
+
+      <!-- Segurança -->
+      <line x1="340" y1="130" x2="340" y2="50" stroke="#DC2626" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <rect x="270" y="20" width="140" height="30" rx="10" fill="#FEE2E2" stroke="#DC2626" stroke-width="1"/>
+      <text x="340" y="40" text-anchor="middle" font-family="Syne" font-size="11" font-weight="700" fill="#7F1D1D">SEGURANÇA 🔴</text>
+
+      <!-- Deploy -->
+      <line x1="410" y1="155" x2="550" y2="90" stroke="#0F766E" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <rect x="550" y="65" width="100" height="48" rx="10" fill="#CCFBF1" stroke="#0F766E" stroke-width="1"/>
+      <text x="600" y="85" text-anchor="middle" font-family="Syne" font-size="11" font-weight="700" fill="#042f2e">DEPLOY</text>
+      <text x="600" y="100" text-anchor="middle" font-family="Syne" font-size="10" fill="#0F766E">infra / nuvem</text>
+      <text x="600" y="114" text-anchor="middle" font-family="Space Mono" font-size="9" fill="#0D9488">🟤 teal</text>
+
+      <!-- Erros -->
+      <line x1="340" y1="180" x2="340" y2="270" stroke="#EA580C" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <rect x="265" y="268" width="150" height="30" rx="10" fill="#FFEDD5" stroke="#EA580C" stroke-width="1"/>
+      <text x="340" y="288" text-anchor="middle" font-family="Syne" font-size="11" font-weight="700" fill="#7C2D12">CENÁRIOS DE ERRO 🟠</text>
+    </svg>
+
+    <div class="accent-card" style="background:var(--bg2)">
+      <div class="ac-label" style="color:var(--txt2)">como construir sua arquitetura</div>
+      <div class="ac-body">
+        <strong>1.</strong> Comece pelo centro: qual é o núcleo do seu projeto?<br>
+        <strong>2.</strong> Expanda por camadas: dados → lógica → interface → infraestrutura<br>
+        <strong>3.</strong> Use cores diferentes pra cada camada (como na legenda acima)<br>
+        <strong>4.</strong> Conecte tudo com setas mostrando fluxo de dados<br>
+        <strong>5.</strong> Já nesse estágio, marque onde podem surgir gargalos ou falhas
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="tip-box" style="flex-direction:column;gap:6px">
+        <div style="font-size:13px;font-weight:700;color:var(--txt)">Perguntas pra fazer à IA</div>
+        <div class="tip-text">• "Quais arquiteturas existem pra apps de [X]?"<br>• "Quais são os trade-offs entre monolito e microsserviços pro meu caso?"<br>• "O que pode crashar nessa estrutura?"</div>
+      </div>
+      <div class="tip-box" style="flex-direction:column;gap:6px">
+        <div style="font-size:13px;font-weight:700;color:var(--txt)">Antecipe os crashes</div>
+        <div class="tip-text">• Qual camada falha primeiro sob carga?<br>• O que acontece se o banco cair?<br>• Tem ponto único de falha (SPOF)?<br>• O que acontece com dados em trânsito?</div>
+      </div>
+    </div>
+
+    <div class="tag-row">
+      <span class="tag" style="background:#EDE9FE;color:#3B0764">mapa mental</span>
+      <span class="tag" style="background:#EDE9FE;color:#3B0764">cores por camada</span>
+      <span class="tag" style="background:#EDE9FE;color:#3B0764">fluxo de dados</span>
+      <span class="tag" style="background:#EDE9FE;color:#3B0764">antecipar falhas</span>
+    </div>
+  </div>
+
+  <!-- TAB 2: BANCO DE DADOS -->
+  <div class="section" id="t2">
+    <div class="step-header">
+      <div class="step-num" style="background:#DBEAFE;color:#2563EB">2</div>
+      <div>
+        <div class="step-title">Banco de Dados — A fundação</div>
+        <div class="step-sub">A escolha do banco de dados impacta tudo: performance, custo, escalabilidade. Use a IA pra expandir seu leque de opções e depois decida com critério.</div>
+      </div>
+    </div>
+
+    <div class="accent-card" style="background:#DBEAFE">
+      <div class="ac-label" style="color:#1E3A8A">método: use a ia pra aprender mais</div>
+      <div class="ac-body">Não sabe todos os bancos que existem? <strong>Peça pra IA listar todos os tipos de banco de dados com casos de uso, prós e contras.</strong> Depois filtre pela sua necessidade real. Exemplo: o YouTube usa bancos específicos por causa de latência e volume de vídeos — o contexto muda tudo.</div>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">📊</div>
+        <div class="card-title" style="color:#2563EB">Relacional (SQL)</div>
+        <div class="card-body">PostgreSQL, MySQL. Ideal para dados estruturados, transações complexas, relacionamentos claros. Alta consistência.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🗃️</div>
+        <div class="card-title" style="color:#7C3AED">Documento (NoSQL)</div>
+        <div class="card-body">MongoDB, Firestore. Flexível pra dados variáveis, ótimo pra escalar horizontalmente. Schema dinâmico.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">⚡</div>
+        <div class="card-title" style="color:#DC2626">Cache / In-Memory</div>
+        <div class="card-body">Redis, Memcached. Ultra-rápido pra dados temporários, sessões, filas, pub/sub. Não persiste por padrão.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔗</div>
+        <div class="card-title" style="color:#16A34A">Grafo</div>
+        <div class="card-body">Neo4j. Perfeito pra relacionamentos complexos como redes sociais, recomendações, grafos de conhecimento.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">📈</div>
+        <div class="card-title" style="color:#D97706">Séries Temporais</div>
+        <div class="card-body">InfluxDB, TimescaleDB. Otimizado pra métricas, IoT, logs com timestamp. Alta ingestão de dados contínuos.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔍</div>
+        <div class="card-title" style="color:#0F766E">Busca Textual</div>
+        <div class="card-body">Elasticsearch, Typesense. Indexação full-text, busca semântica, filtros complexos. Complementa o banco principal.</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="brain-section">
+      <div class="brain-title"><span aria-hidden="true" style="font-size:18px;color:#2563EB">Focus</span> Critérios de escolha</div>
+      <ul class="checklist">
+        <li><div class="check-bullet" style="border-color:#2563EB"></div>Qual é o tipo dos meus dados? (estruturado, semi, não estruturado)</li>
+        <li><div class="check-bullet" style="border-color:#2563EB"></div>Qual o volume esperado de dados? (KB, GB, TB, PB)</li>
+        <li><div class="check-bullet" style="border-color:#2563EB"></div>Preciso de transações ACID ou eventualidade é aceitável?</li>
+        <li><div class="check-bullet" style="border-color:#2563EB"></div>Quais são os padrões de leitura vs escrita?</li>
+        <li><div class="check-bullet" style="border-color:#2563EB"></div>Preciso de busca full-text, geo, ou grafos?</li>
+        <li><div class="check-bullet" style="border-color:#2563EB"></div>Qual o custo de hosting (cloud vs self-hosted)?</li>
+        <li><div class="check-bullet" style="border-color:#2563EB"></div>Há necessidade de replicação ou sharding?</li>
+      </ul>
+    </div>
+
+    <div class="tag-row">
+      <span class="tag" style="background:#DBEAFE;color:#1E3A8A">escolha criteriosa</span>
+      <span class="tag" style="background:#DBEAFE;color:#1E3A8A">custo-benefício</span>
+      <span class="tag" style="background:#DBEAFE;color:#1E3A8A">escala</span>
+      <span class="tag" style="background:#DBEAFE;color:#1E3A8A">consistência</span>
+    </div>
+  </div>
+
+  <!-- TAB 3: BACKEND -->
+  <div class="section" id="t3">
+    <div class="step-header">
+      <div class="step-num" style="background:#DCFCE7;color:#16A34A">3</div>
+      <div>
+        <div class="step-title">Backend — O motor</div>
+        <div class="step-sub">Construa o backend antes do frontend. Sem API funcionando, não há interface que funcione. Respeite essa ordem.</div>
+      </div>
+    </div>
+
+    <div class="phase-bar">
+      <div class="phase-seg" style="background:#DCFCE7;color:#14532D;flex:1.5">DADOS</div>
+      <div class="phase-seg" style="background:#16A34A;color:#fff;flex:2">BACKEND ← você está aqui</div>
+      <div class="phase-seg" style="background:#F3F4F6;color:#6B7280;flex:1.5">FRONTEND</div>
+    </div>
+
+    <div class="accent-card" style="background:#DCFCE7">
+      <div class="ac-label" style="color:#14532D">a regra das etapas</div>
+      <div class="ac-body">Não faz sentido construir um frontend lindo pra uma API que não existe. <strong>Backend primeiro, sempre.</strong> Isso não é dogma — é lógica: você não pode testar uma interface sem dados reais fluindo.</div>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">🔌</div>
+        <div class="card-title">Design da API</div>
+        <div class="card-body">REST ou GraphQL? Defina endpoints, contratos de request/response e versionamento antes de implementar.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">✅</div>
+        <div class="card-title">Validação de dados</div>
+        <div class="card-body">Todo input vindo do cliente é suspeito. Valide tipo, tamanho, formato, range. Use schemas (Zod, Pydantic, etc.).</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔐</div>
+        <div class="card-title">Autenticação</div>
+        <div class="card-body">JWT, OAuth2, sessões. Implemente autenticação antes de qualquer rota protegida. Nunca deixe pra depois.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">📝</div>
+        <div class="card-title">Logging & Observability</div>
+        <div class="card-body">Você precisa saber o que está acontecendo em produção. Logs estruturados, traces e métricas desde o início.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🧪</div>
+        <div class="card-title">Testes unitários</div>
+        <div class="card-body">Use a IA pra gerar suites de teste. Peça especificamente por edge cases e cenários de falha.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">⚡</div>
+        <div class="card-title">Rate limiting</div>
+        <div class="card-body">Limite de requisições por IP/usuário. Evita abuso, reduz custo e protege sua infra desde o começo.</div>
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <div class="tip-icon">🤖</div>
+      <div class="tip-text"><strong>Peça à IA:</strong> "Liste todos os pontos de falha possíveis nessa API REST que recebe dados de usuário e persiste no banco." A IA vai gerar uma lista que você usará como checklist de hardening.</div>
+    </div>
+
+    <div class="tag-row">
+      <span class="tag" style="background:#DCFCE7;color:#14532D">API primeiro</span>
+      <span class="tag" style="background:#DCFCE7;color:#14532D">validação</span>
+      <span class="tag" style="background:#DCFCE7;color:#14532D">testes</span>
+      <span class="tag" style="background:#DCFCE7;color:#14532D">logging</span>
+    </div>
+  </div>
+
+  <!-- TAB 4: FRONTEND -->
+  <div class="section" id="t4">
+    <div class="step-header">
+      <div class="step-num" style="background:#FEF3C7;color:#D97706">4</div>
+      <div>
+        <div class="step-title">Frontend — A vitrine</div>
+        <div class="step-sub">Só comece o frontend quando o backend estiver funcional. Interface sem API é teatro. Com API funcionando, você constrói com dados reais.</div>
+      </div>
+    </div>
+
+    <div class="phase-bar">
+      <div class="phase-seg" style="background:#F3F4F6;color:#6B7280">DADOS</div>
+      <div class="phase-seg" style="background:#F3F4F6;color:#6B7280">BACKEND</div>
+      <div class="phase-seg" style="background:#D97706;color:#fff;flex:2">FRONTEND ← você está aqui</div>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">🗂️</div>
+        <div class="card-title">Componentização</div>
+        <div class="card-body">Pense em componentes reutilizáveis antes de sair codando telas. Isso reduz duplicação e facilita manutenção.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">📱</div>
+        <div class="card-title">Mobile-first</div>
+        <div class="card-body">Design e código pensados primeiro pra mobile. Escalar pra desktop é mais fácil do que o contrário.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🌐</div>
+        <div class="card-title">Estado global</div>
+        <div class="card-body">Onde vai viver o estado da aplicação? Context, Zustand, Redux, Pinia — escolha antes de começar a escalar.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">⚡</div>
+        <div class="card-title">Performance</div>
+        <div class="card-body">Lazy loading, code splitting, cache de requisições. O frontend é o que o usuário sente — otimize com intenção.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">♿</div>
+        <div class="card-title">Acessibilidade</div>
+        <div class="card-body">Semântica HTML, contraste, navegação por teclado. Acessibilidade não é opcional — impacta SEO e usuários reais.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🧪</div>
+        <div class="card-title">Testes de UI</div>
+        <div class="card-body">Cypress, Playwright. Teste fluxos críticos do usuário. Peça à IA pra gerar scripts de teste dos principais fluxos.</div>
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <div class="tip-icon">🎨</div>
+      <div class="tip-text"><strong>IA no frontend:</strong> use pra gerar componentes de base, mas <strong>sempre revise o código</strong>. A IA não sabe o contexto do seu sistema de design, suas regras de negócio nem os padrões do time.</div>
+    </div>
+
+    <div class="tag-row">
+      <span class="tag" style="background:#FEF3C7;color:#78350F">componentes</span>
+      <span class="tag" style="background:#FEF3C7;color:#78350F">dados reais</span>
+      <span class="tag" style="background:#FEF3C7;color:#78350F">performance</span>
+      <span class="tag" style="background:#FEF3C7;color:#78350F">acessibilidade</span>
+    </div>
+  </div>
+
+  <!-- TAB 5: DEPLOY -->
+  <div class="section" id="t5">
+    <div class="step-header">
+      <div class="step-num" style="background:#CCFBF1;color:#0F766E">5</div>
+      <div>
+        <div class="step-title">Deploy — Da sua máquina pro mundo</div>
+        <div class="step-sub">Antes de jogar na nuvem, teste localmente. Antes de ir pra produção, teste em staging. Nunca pule etapas no deploy.</div>
+      </div>
+    </div>
+
+    <div class="flow-row">
+      <div class="flow-node" style="background:#DCFCE7;color:#14532D">local</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-node" style="background:#FEF3C7;color:#78350F">staging</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-node" style="background:#CCFBF1;color:#042f2e">produção</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-node" style="background:#DBEAFE;color:#1E3A8A">monitoramento</div>
+    </div>
+
+    <div class="accent-card" style="background:#CCFBF1">
+      <div class="ac-label" style="color:#042f2e">regra de ouro do deploy</div>
+      <div class="ac-body"><strong>Sempre teste manualmente antes de automação.</strong> Pipelines CI/CD são excelentes, mas você precisa entender o que está acontecendo antes de automatizar. Se algo quebra no CI e você nunca fez manualmente, fica perdido.</div>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">💰</div>
+        <div class="card-title" style="color:#0F766E">Custo-benefício</div>
+        <div class="card-body">Sempre avalie: AWS, GCP, Azure, Railway, Fly.io, Vercel. O mais caro nem sempre é o melhor pro seu caso. Calcule o custo projetado.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔁</div>
+        <div class="card-title" style="color:#0F766E">CI/CD</div>
+        <div class="card-body">Automatize apenas depois de entender o processo manual. GitHub Actions, GitLab CI, Bitbucket Pipelines.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🐳</div>
+        <div class="card-title" style="color:#0F766E">Containerização</div>
+        <div class="card-body">Docker garante que "funciona na minha máquina" = funciona em qualquer lugar. Aprenda o básico antes de Kubernetes.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">📊</div>
+        <div class="card-title" style="color:#0F766E">Monitoramento</div>
+        <div class="card-body">Uptime, erros, latência, uso de memória. Configure alertas antes de precisar deles. Não descubra a queda por usuário.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔄</div>
+        <div class="card-title" style="color:#0F766E">Rollback</div>
+        <div class="card-body">Antes de fazer deploy, certifique que sabe como voltar. Blue-green deploy, feature flags, ou simplesmente git revert.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🌍</div>
+        <div class="card-title" style="color:#0F766E">CDN & Edge</div>
+        <div class="card-body">Assets estáticos perto do usuário. Cloudflare, AWS CloudFront. Reduz latência e custo de bandwidth.</div>
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <div class="tip-icon">🧮</div>
+      <div class="tip-text"><strong>Peça à IA:</strong> "Estime o custo mensal de rodar [descreva seu projeto] na AWS vs Railway vs Fly.io com [X] usuários simultâneos e [Y] GB de dados." Use como ponto de partida — não como verdade absoluta.</div>
+    </div>
+
+    <div class="tag-row">
+      <span class="tag" style="background:#CCFBF1;color:#042f2e">manual primeiro</span>
+      <span class="tag" style="background:#CCFBF1;color:#042f2e">staging</span>
+      <span class="tag" style="background:#CCFBF1;color:#042f2e">custo</span>
+      <span class="tag" style="background:#CCFBF1;color:#042f2e">rollback</span>
+    </div>
+  </div>
+
+  <!-- TAB 6: SEGURANÇA -->
+  <div class="section" id="t6">
+    <div class="step-header">
+      <div class="step-num" style="background:#FEE2E2;color:#DC2626">6</div>
+      <div>
+        <div class="step-title">Segurança — O que você não vê te machuca</div>
+        <div class="step-sub">Segurança não é uma feature que você adiciona no final. É uma mentalidade que permeia todas as etapas.</div>
+      </div>
+    </div>
+
+    <div class="accent-card" style="background:#FEE2E2">
+      <div class="ac-label" style="color:#7F1D1D">saiba seus pontos fracos</div>
+      <div class="ac-body">Se você não manja de segurança, <strong>use a IA como seu especialista temporário.</strong> Peça revisão de código com foco em vulnerabilidades. Peça lista de vetores de ataque. Peça modelagem de ameaças. Mas lembre: a IA pode errar — use como camada extra, não como única verificação.</div>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">💉</div>
+        <div class="card-title" style="color:#DC2626">Injeção (SQL, XSS)</div>
+        <div class="card-body">Parameterized queries sempre. Sanitize inputs. Valide no servidor, não só no cliente.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔑</div>
+        <div class="card-title" style="color:#DC2626">Autenticação</div>
+        <div class="card-body">Senhas com hash (bcrypt/Argon2). MFA quando possível. Tokens com expiração curta. Revogação de sessão.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🛡️</div>
+        <div class="card-title" style="color:#DC2626">Autorização</div>
+        <div class="card-body">RBAC, ABAC. Verifique permissão em cada endpoint, não só no login. Princípio do mínimo privilégio.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔒</div>
+        <div class="card-title" style="color:#DC2626">HTTPS / TLS</div>
+        <div class="card-body">Sem exceções. Let's Encrypt se precisar de gratuito. HSTS habilitado. Certificados com renovação automática.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🚫</div>
+        <div class="card-title" style="color:#DC2626">Rate Limiting</div>
+        <div class="card-body">Limite tentativas de login. Limite criação de conta por IP. Protege contra brute force e scraping.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">📦</div>
+        <div class="card-title" style="color:#DC2626">Dependências</div>
+        <div class="card-body">npm audit, Snyk, Dependabot. Suas dependências têm mais vulnerabilidades que seu código. Atualize regularmente.</div>
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <div class="tip-icon">🕵️</div>
+      <div class="tip-text"><strong>Prompt útil de segurança:</strong> "Faça um threat modeling desse endpoint [cole o código]. Liste todas as formas possíveis de abuso, bypass de autenticação, injeção e vazamento de dados. Priorize por criticidade."</div>
+    </div>
+
+    <div class="tag-row">
+      <span class="tag" style="background:#FEE2E2;color:#7F1D1D">threat modeling</span>
+      <span class="tag" style="background:#FEE2E2;color:#7F1D1D">mínimo privilégio</span>
+      <span class="tag" style="background:#FEE2E2;color:#7F1D1D">dependências</span>
+      <span class="tag" style="background:#FEE2E2;color:#7F1D1D">auditoria</span>
+    </div>
+  </div>
+
+  <!-- TAB 7: ERROS & RESET -->
+  <div class="section" id="t7">
+    <div class="step-header">
+      <div class="step-num" style="background:var(--bg2);color:var(--txt)">7</div>
+      <div>
+        <div class="step-title">Erros, Recomeços & Aprendizado</div>
+        <div class="step-sub">Errar faz parte do processo. Recomeçar não é fracasso. Às vezes, a decisão mais inteligente é jogar fora e começar com mais clareza.</div>
+      </div>
+    </div>
+
+    <div class="quote-block" style="border-color:#D97706;background:#FEF3C7">
+      <p>"Às vezes compensa mais começar com assertividade do que corrigir inúmeros erros acumulados."</p>
+      <span>— filosofia deste manual</span>
+    </div>
+
+    <div class="summary-grid">
+      <div class="summary-cell" style="background:var(--bg2)">
+        <div class="sc-num" style="color:#DC2626">≠</div>
+        <div class="sc-label">Recomeçar ≠ Fracasso</div>
+      </div>
+      <div class="summary-cell" style="background:var(--bg2)">
+        <div class="sc-num" style="color:#16A34A">✓</div>
+        <div class="sc-label">Errar = Aprender</div>
+      </div>
+      <div class="summary-cell" style="background:var(--bg2)">
+        <div class="sc-num" style="color:#2563EB">∞</div>
+        <div class="sc-label">Iterar > Perfeccionar</div>
+      </div>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">🧹</div>
+        <div class="card-title">Quando recomeçar</div>
+        <div class="card-body">Se mais de 40% do código seria refatorado, recomeçar estruturalmente pode ser mais rápido. Não se prenda ao sunk cost.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">📚</div>
+        <div class="card-title">Documente os erros</div>
+        <div class="card-body">Mantenha um doc de "o que não funcionou e por quê". Isso vira seu guia pessoal pra não repetir os mesmos erros.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔬</div>
+        <div class="card-title">Post-mortem</div>
+        <div class="card-body">Quando algo crashar em produção, faça um post-mortem honesto: o que aconteceu, por que, o que muda. Sem apontar culpados.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🎯</div>
+        <div class="card-title">MVP com intenção</div>
+        <div class="card-body">Comece pelo menor produto que valida a hipótese principal. Menos é mais quando se está aprendendo o domínio.</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="brain-section">
+      <div class="brain-title"><span aria-hidden="true" style="font-size:18px;color:var(--txt2)">Check</span> Checklist antes de cada etapa</div>
+      <ul class="checklist">
+        <li><div class="check-bullet"></div>Entendi o que estou construindo e por quê?</li>
+        <li><div class="check-bullet"></div>Já testei manualmente o que veio antes?</li>
+        <li><div class="check-bullet"></div>Quais são os cenários de falha desta etapa?</li>
+        <li><div class="check-bullet"></div>A IA que estou usando é a mais adequada pra este problema?</li>
+        <li><div class="check-bullet"></div>Estou revisando o que a IA gerou ou apenas colando?</li>
+        <li><div class="check-bullet"></div>Tenho como reverter se der errado?</li>
+        <li><div class="check-bullet"></div>O custo desta decisão é proporcional ao benefício?</li>
+        <li><div class="check-bullet"></div>Estou respeitando a sequência de etapas?</li>
+      </ul>
+    </div>
+
+    <div class="tag-row">
+      <span class="tag" style="background:var(--bg2);color:var(--txt2)">MVP</span>
+      <span class="tag" style="background:var(--bg2);color:var(--txt2)">post-mortem</span>
+      <span class="tag" style="background:var(--bg2);color:var(--txt2)">sunk cost</span>
+      <span class="tag" style="background:var(--bg2);color:var(--txt2)">iteração</span>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    Manual visual para pensar melhor, decidir com mais clareza e usar IA com intenção.
+  </div>
+</div>
+
+<script>
+  const tabs = document.querySelectorAll('.tab-btn');
+  const sections = document.querySelectorAll('.section');
+  tabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      sections.forEach(s => s.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
